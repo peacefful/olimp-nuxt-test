@@ -5,6 +5,10 @@ export default defineNuxtConfig({
       BASE_URL: 'https://phonebook.ddirection.kz'
     }
   },
+  app: {
+	baseURL: "/olimp-nuxt-test/",
+	
+  },
   devtools: { enabled: true },
   css: ['~/assets/styles/main.scss'],
   modules: ['@vee-validate/nuxt', '@pinia/nuxt']
