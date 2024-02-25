@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body {
+  background-color: #f9f9f9;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+input {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  outline: none;
+  font-size: 14px;
+}
+
+a {
+  text-decoration: none;
+  color: #909090;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  background-color: white;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='date'] {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
