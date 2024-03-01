@@ -254,10 +254,10 @@ const userForm = reactive([
       }
     }
 
-	 .modal__container-button {
-	margin-top: 4%; 
-	 padding: 2% 7%
-  }
+    .modal__container-button {
+      margin-top: 4%;
+      padding: 2% 7%;
+    }
   }
 }
 </style>

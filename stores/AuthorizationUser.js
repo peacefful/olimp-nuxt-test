@@ -1,8 +1,8 @@
 export const useAuthorizationStore = defineStore('authorizationStore', {
-	state: () => ({
-		token: useCookie('token').value,
-		baseUrl: useRuntimeConfig().public.BASE_URL
-	}),
+  state: () => ({
+    token: useCookie('token').value,
+    baseUrl: useRuntimeConfig().public.BASE_URL
+  }),
   actions: {
     async authorization(email, password) {
       try {
