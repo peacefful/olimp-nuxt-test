@@ -2,36 +2,37 @@
   <header class="header">
     <div class="header__wrapper">
       <div class="header__title">
-        <img src="../assets/icons/Vector.svg" alt="" />
-        <img src="../assets/icons/Vector-1.svg" class="header__second-icon" alt="" />
+        <SilverBookIcon />
         <div>Телефонный справочник</div>
       </div>
-      <Button @click="logout" color="silver" style="padding: 1.2% 2.2%"> ВЫХОД </Button>
+      <Button @click="logout" color="silver"> ВЫХОД </Button>
     </div>
   </header>
   <main class="main">
     <div class="main__content">
-      <Button @click="openUserFormModal" style="padding: 1.2% 2.2%"> ДОБАВИТЬ ЗАПИСЬ </Button>
+      <Button @click="openUserFormModal"> ДОБАВИТЬ ЗАПИСЬ </Button>
       <Modal
         @on-user-action="usersStore.addUser"
         @close-modal="closeUserFormModal"
-        title="Добавить запись"
         button-title="ДОБАВИТЬ"
+        title="Добавить запись"
         v-if="isUserFormModalOpen"
       />
-      <form @submit.prevent="" class="main__form">
-        <label v-for="u in userFilter" :key="u.id">
+      <form class="main__form">
+        <label v-for="userFilter in usersFilter" :key="userFilter.id">
           <div class="main__form-filter">
-            <strong>{{ u.title }}</strong>
-            <img @click="key = u.key" src="../assets/icons/arrows.svg" alt="" />
+            <strong>{{ userFilter.title }}</strong>
+            <button @click.prevent="key = userFilter.key">
+              <ArrowsIcon />
+            </button>
           </div>
-          <Input :type="u.type" v-model:value="u.value" />
+          <Input :type="userFilter.type" v-model:value="userFilter.value" />
         </label>
       </form>
       <div v-if="usersStore.users.length">
         <ul
           class="main__list"
-          v-for="(user, index) in searchUser(sortByKey(key), userFilter)"
+          v-for="(user, index) in searchUser(sortByKey(key), usersFilter)"
           :key="user.id"
         >
           <div class="main__item" :class="{ even: index % 2 !== 0 }">
@@ -42,27 +43,30 @@
             <p>{{ user.address }}</p>
             <p>{{ user.birthday }}</p>
             <p>{{ user.phone }}</p>
-            <div>
-              <img @click="selectUserById(user.id)" src="../assets/icons/edit.svg" alt="" />
-              <img
+            <div class="main__buttons">
+              <button :class="{ even: index % 2 !== 0 }" @click="selectUserById(user.id)">
+                <EditIcon />
+              </button>
+              <button
+                :class="{ even: index % 2 !== 0 }"
                 @click="usersStore.deleteUser(user.id, index)"
-                src="../assets/icons/delete.svg"
-                alt=""
-              />
+              >
+                <DeleteIcon />
+              </button>
             </div>
           </div>
         </ul>
       </div>
-      <div v-else style="margin-top: 2%; display: flex; justify-content: center">
+      <div v-else class="main__spinner">
         <Spinner />
       </div>
       <Modal
         @close-modal="unSelectUserById"
         @on-user-action="usersStore.editUser"
         :user-id="userId"
-        v-if="isEditUserModalOpen"
         title="Редактировать пользователя"
         button-title="СОХРАНИТЬ"
+        v-if="isEditUserModalOpen"
       />
       <span v-if="usersStore.successMessage === 'Пользователь удален'">
         {{ usersStore.successMessage }}
@@ -73,6 +77,10 @@
 </template>
 
 <script setup>
+import SilverBookIcon from '@/assets/icons/SilverBookIcon.vue'
+import ArrowsIcon from '@/assets/icons/ArrowsIcon.vue'
+import EditIcon from '@/assets/icons/EditIcon.vue'
+import DeleteIcon from '@/assets/icons/DeleteIcon.vue'
 import { reactive } from 'vue'
 
 const token = useCookie('token')
@@ -107,7 +115,7 @@ const unSelectUserById = () => {
   closeEditUserModal()
 }
 
-const userFilter = reactive([
+const usersFilter = reactive([
   { id: 1, title: 'Фамилия', value: '', type: 'text', key: 'f' },
   { id: 2, title: 'Имя', value: '', type: 'text', key: 'i' },
   { id: 3, title: 'Отчество', value: '', type: 'text', key: 'o' },
@@ -124,6 +132,10 @@ const logout = () => {
 </script>
 
 <style scoped lang="scss">
+Button {
+  padding: 1.2% 2.2%;
+}
+
 header {
   box-shadow: 0px 12px 24px 0px #00000026;
 
@@ -140,12 +152,6 @@ header {
 
       div {
         font-size: 16px;
-      }
-
-      .header__second-icon {
-        position: relative;
-        right: 23px;
-        bottom: 4px;
       }
     }
   }
@@ -178,16 +184,18 @@ header {
         font-size: 14px;
         display: flex;
         justify-content: space-between;
-
-        img {
-          cursor: pointer;
-        }
       }
     }
 
     .main__list {
       display: flex;
       margin-top: 10px;
+    }
+
+    .main__buttons {
+      padding: 0% 1%;
+      display: flex;
+      gap: 5px;
     }
 
     .main__item {
@@ -204,10 +212,6 @@ header {
       div {
         display: flex;
 
-        img {
-          cursor: pointer;
-        }
-
         img:nth-child(2) {
           margin: 0% 16px;
         }
@@ -216,6 +220,12 @@ header {
 
     .even {
       background-color: #ededed;
+    }
+
+    .main__spinner {
+      margin-top: 2%;
+      display: flex;
+      justify-content: center;
     }
   }
 

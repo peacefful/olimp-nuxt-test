@@ -2,25 +2,26 @@
   <main class="auth">
     <form
       @submit.prevent="authorizationStore.authorization(email, password)"
-      class="auth__conntainer"
+      class="auth__container"
     >
-      <img src="../assets/icons/blue-book.svg" alt="" />
+      <Logo />
       <label>
         <p>E-mail</p>
         <Input v-model:value="email" v-bind="emailAttrs" type="text" />
-        <div style="color: red">{{ errors.email }}</div>
+        <div class="auth__error">{{ errors.email }}</div>
       </label>
-      <label style="margin-top: 8%">
+      <label>
         <p>Пароль</p>
         <Input v-model:value="password" v-bind="passwordAttrs" type="password" />
-        <div style="color: red">{{ errors.password }}</div>
+        <div class="auth__error">{{ errors.password }}</div>
       </label>
-      <Button style="margin-top: 8%; width: 100%; padding: 5%"> ВОЙТИ </Button>
+      <Button> ВОЙТИ </Button>
     </form>
   </main>
 </template>
 
 <script setup>
+import Logo from '@/assets/icons/LogoIcon.vue'
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/valibot'
 import { email as emailValidator, string, minLength, object } from 'valibot'
@@ -58,7 +59,7 @@ const [password, passwordAttrs] = defineField('password')
   justify-content: center;
   align-items: center;
 
-  &__conntainer {
+  &__container {
     img {
       margin-top: 24px;
     }
@@ -74,6 +75,20 @@ const [password, passwordAttrs] = defineField('password')
       height: 40px;
       padding: 0% 5%;
       width: 90%;
+    }
+
+    Button {
+      margin-top: 8%;
+      width: 100%;
+      padding: 5%;
+    }
+
+    label:nth-child(3) {
+      margin-top: 8%;
+    }
+
+    .auth__error {
+      color: red;
     }
   }
 }

@@ -2,12 +2,8 @@
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      BASE_URL: 'https://phonebook.ddirection.kz'
+      BASE_URL: process.env.NUXT_PUBLIC_BASE_URL
     }
-  },
-  app: {
-	baseURL: "/olimp-nuxt-test/",
-	
   },
   devtools: { enabled: true },
   css: ['~/assets/styles/main.scss'],

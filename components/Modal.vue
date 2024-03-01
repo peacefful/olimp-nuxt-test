@@ -4,7 +4,7 @@
       <div class="modal__container-title">
         <div>{{ title }}</div>
         <button @click="$emit('closeModal')">
-          <img src="../assets/icons/close.svg" alt="" />
+          <CloseIcon />
         </button>
       </div>
       <form
@@ -56,7 +56,7 @@
             <span>{{ errors[userInput.errorName] }}</span>
           </label>
         </div>
-        <Button type="submit" color="green" style="margin-top: 4%; padding: 2% 7%">
+        <Button type="submit" color="green" class="modal__container-button">
           {{ buttonTitle }}
         </Button>
         <div class="success-message">
@@ -71,6 +71,7 @@
 </template>
 
 <script setup>
+import CloseIcon from '@/assets/icons/CloseIcon.vue'
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/valibot'
 import { string, minLength, object, maxLength } from 'valibot'
@@ -252,6 +253,11 @@ const userForm = reactive([
         margin-top: 2%;
       }
     }
+
+	 .modal__container-button {
+	margin-top: 4%; 
+	 padding: 2% 7%
+  }
   }
 }
 </style>

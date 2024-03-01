@@ -1,9 +1,9 @@
 <template>
   <div class="pagination">
     <div class="pagination__list">
-      <div style="display: flex; gap: 5px" v-if="usersStore.pagination.pageCount > 5">
+      <div class="pagination__items" v-if="pageCount > 5">
         <button @click="backPage" class="pagination__navigate" :disabled="currentPage === 1">
-          <img src="../assets/icons/left-arrow.svg" alt="" />
+          <LeftArrowIcon />
         </button>
         <ul v-for="pageNumber in visiblePages" :key="pageNumber">
           <button
@@ -18,13 +18,13 @@
         <button
           @click="nextPage"
           class="pagination__navigate"
-          :disabled="currentPage === usersStore.pagination.pageCount"
+          :disabled="currentPage === pageCount"
         >
-          <img src="../assets/icons/right-arrow.svg" alt="" />
+          <RightArrowIcon />
         </button>
       </div>
-      <div style="display: flex; gap: 5px" v-else>
-        <ul v-for="pageNumber in usersStore.pagination.pageCount" :key="pageNumber">
+      <div class="pagination__items" v-else>
+        <ul v-for="pageNumber in pageCount" :key="pageNumber">
           <button
             @click="selectPage(pageNumber)"
             class="pagination__button"
@@ -35,29 +35,32 @@
         </ul>
       </div>
     </div>
-    <div v-if="usersStore.pagination.totalCount" class="pagination__note">
+    <div v-if="totalCount" class="pagination__note">
       {{ notes }}
     </div>
   </div>
 </template>
 
 <script setup>
+import RightArrowIcon from '@/assets/icons/RightArrowIcon.vue'
+import LeftArrowIcon from '@/assets/icons/LeftArrowIcon.vue'
 import { ref, computed } from 'vue'
-
-const usersStore = useUsersStore()
-
-const notes = computed(() => {
-  const totalCount = usersStore.pagination.totalCount
-  const currentNotes = usersStore.users.length
-
-  return `Показаны записи 1-${currentNotes} из ${totalCount}`
-})
 
 const currentPage = ref(1)
 
+const usersStore = useUsersStore()
+
+const totalCount = computed(() => usersStore.pagination.totalCount)
+const pageCount = computed(() => usersStore.pagination.pageCount)
+
+const notes = computed(() => {
+  const currentNotes = usersStore.users.length
+  return `Показаны записи 1-${currentNotes} из ${totalCount.value}`
+})
+
 const visiblePages = computed(() => {
   const startPage = Math.max(1, currentPage.value - 2)
-  const endPage = Math.min(usersStore.pagination.pageCount, startPage + 4)
+  const endPage = Math.min(pageCount.value, startPage + 4)
   const pages = []
 
   for (let i = endPage - 4; i <= endPage; i++) {
@@ -77,7 +80,7 @@ const backPage = () => {
 }
 
 const nextPage = () => {
-  if (currentPage.value < usersStore.pagination.pageCount) {
+  if (currentPage.value < pageCount.value) {
     currentPage.value++
     usersStore.getUsers(currentPage.value)
   }
@@ -99,6 +102,11 @@ const selectPage = (page) => {
     margin-top: 24px;
     display: flex;
     gap: 5px;
+
+    .pagination__items {
+      display: flex;
+      gap: 5px;
+    }
 
     .active {
       background-color: #0098da;
@@ -146,7 +154,6 @@ const selectPage = (page) => {
 
       &:disabled {
         cursor: default;
-        // opacity: 0.5;
         background-color: #dbdbdbc8;
       }
     }
