@@ -5,13 +5,13 @@
         <SilverBookIcon />
         <div>Телефонный справочник</div>
       </div>
-      <Button @click="logout" color="silver"> ВЫХОД </Button>
+      <UIButton @click="logout" color="silver"> ВЫХОД </UIButton>
     </div>
   </header>
   <main class="main">
     <div class="main__content">
-      <Button @click="openUserFormModal"> ДОБАВИТЬ ЗАПИСЬ </Button>
-      <Modal
+      <UIButton @click="openUserFormModal"> ДОБАВИТЬ ЗАПИСЬ </UIButton>
+      <UIModal
         @on-user-action="usersStore.addUser"
         @close-modal="closeUserFormModal"
         button-title="ДОБАВИТЬ"
@@ -26,7 +26,7 @@
               <ArrowsIcon />
             </button>
           </div>
-          <Input :type="userFilter.type" v-model:value="userFilter.value" />
+          <UIInput :type="userFilter.type" v-model:value="userFilter.value" />
         </label>
       </form>
       <div v-if="usersStore.users.length">
@@ -58,9 +58,9 @@
         </ul>
       </div>
       <div v-else class="main__spinner">
-        <Spinner />
+        <UISpinner />
       </div>
-      <Modal
+      <UIModal
         @close-modal="unSelectUserById"
         @on-user-action="usersStore.editUser"
         :user-id="userId"
@@ -71,7 +71,7 @@
       <span v-if="usersStore.successMessage === 'Пользователь удален'">
         {{ usersStore.successMessage }}
       </span>
-      <Pagination />
+      <UIPagination />
     </div>
   </main>
 </template>
@@ -82,8 +82,6 @@ import ArrowsIcon from '@/assets/icons/ArrowsIcon.vue'
 import EditIcon from '@/assets/icons/EditIcon.vue'
 import DeleteIcon from '@/assets/icons/DeleteIcon.vue'
 import { reactive } from 'vue'
-
-const token = useCookie('token')
 
 const key = ref(null)
 const userId = ref(0)
@@ -124,6 +122,8 @@ const usersFilter = reactive([
   { id: 6, title: 'Дата рождения', value: '', type: 'date', key: 'birthday' },
   { id: 7, title: 'Номер телефона', value: '', type: 'text', key: 'phone' }
 ])
+
+const token = useCookie('token')
 
 const logout = () => {
   token.value = 0

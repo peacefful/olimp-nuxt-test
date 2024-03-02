@@ -1,14 +1,13 @@
 export const useAuthorizationStore = defineStore('authorizationStore', {
   state: () => ({
-    token: useCookie('token').value,
-    baseUrl: useRuntimeConfig().public.BASE_URL
+    token: useCookie('token').value
   }),
   actions: {
-    async authorization(email, password) {
+    async authorization(authObj) {
       try {
-        const data = await $fetch(`${this.baseUrl}/auth/signin`, {
+        const data = await useFetchApi(`/auth/signin`, {
           method: 'POST',
-          body: { email, password }
+          body: { ...authObj }
         })
 
         if (data?.access_token) {
@@ -19,19 +18,18 @@ export const useAuthorizationStore = defineStore('authorizationStore', {
         console.log(error)
       }
     },
-    async refreshToken(token) {
-      const refreshToken = useCookie('token')
+    async refreshToken() {
+      const newToken = useCookie('token')
 
       try {
-        const refreshToken = await $fetch(`${this.baseUrl}/auth/refresh`, {
+        const refreshToken = await useFetchApi(`/auth/refresh`, {
           method: 'POST',
-          headers: { Authorization: `Bearer ${this.token}` },
           body: {
-            access_token: token
+            access_token: this.token
           }
         })
 
-        refreshToken.value = await refreshToken.access_token
+        newToken.value = await refreshToken.access_token
       } catch (error) {
         error.status === 401 ? navigateTo('/') : null
       }

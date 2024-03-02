@@ -1,21 +1,21 @@
 <template>
   <main class="auth">
     <form
-      @submit.prevent="authorizationStore.authorization(email, password)"
+      @submit.prevent="authorizationStore.authorization({ email, password })"
       class="auth__container"
     >
       <Logo />
       <label>
         <p>E-mail</p>
-        <Input v-model:value="email" v-bind="emailAttrs" type="text" />
+        <UIInput v-model:value="email" v-bind="emailAttrs" type="text" />
         <div class="auth__error">{{ errors.email }}</div>
       </label>
       <label>
         <p>Пароль</p>
-        <Input v-model:value="password" v-bind="passwordAttrs" type="password" />
+        <UIInput v-model:value="password" v-bind="passwordAttrs" type="password" />
         <div class="auth__error">{{ errors.password }}</div>
       </label>
-      <Button> ВОЙТИ </Button>
+      <UIButton> ВОЙТИ </UIButton>
     </form>
   </main>
 </template>

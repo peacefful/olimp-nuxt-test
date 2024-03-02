@@ -1,6 +1,3 @@
-import { isEmptyObj } from '../utils/isEmptyObj'
-import { compareStrings } from '../utils/compareStrings'
-
 export const useUsersStore = defineStore('usersStore', {
   state: () => ({
     users: [],
@@ -8,10 +5,7 @@ export const useUsersStore = defineStore('usersStore', {
     pagination: {},
 
     successMessage: '',
-    errorMessage: '',
-
-    token: useCookie('token').value,
-    baseUrl: useRuntimeConfig().public.BASE_URL
+    errorMessage: ''
   }),
   getters: {
     sortByKey: (state) => {
@@ -33,13 +27,9 @@ export const useUsersStore = defineStore('usersStore', {
 
       try {
         const authorizationStore = useAuthorizationStore()
-        await authorizationStore.refreshToken(this.token)
+        await authorizationStore.refreshToken()
 
-        this.token = useCookie('token').value
-
-        const data = await $fetch(`${this.baseUrl}/records?page=${n}`, {
-          headers: { Authorization: `Bearer ${this.token}` }
-        })
+        const data = await useFetchApi(`/records?page=${n}`)
 
         if (data?.items) {
           this.users = data.items
@@ -54,13 +44,9 @@ export const useUsersStore = defineStore('usersStore', {
 
       try {
         const authorizationStore = useAuthorizationStore()
-        await authorizationStore.refreshToken(this.token)
+        await authorizationStore.refreshToken()
 
-        this.token = useCookie('token').value
-
-        const data = await $fetch(`${this.baseUrl}/records/${id}`, {
-          headers: { Authorization: `Bearer ${this.token}` }
-        })
+        const data = await useFetchApi(`/records/${id}`)
 
         data ? (this.user = data) : null
       } catch (error) {
@@ -70,14 +56,9 @@ export const useUsersStore = defineStore('usersStore', {
     async deleteUser(id, index) {
       try {
         const authorizationStore = useAuthorizationStore()
-        await authorizationStore.refreshToken(this.token)
+        await authorizationStore.refreshToken()
 
-        this.token = useCookie('token').value
-
-        const deleteUser = await $fetch(`${this.baseUrl}/records/${id}`, {
-          method: 'DELETE',
-          headers: { Authorization: `Bearer ${updatedToken}` }
-        })
+        const deleteUser = await useFetchApi(`/records/${id}`, { method: 'DELETE' })
 
         if (deleteUser) {
           this.users.splice(index, 1)
@@ -87,29 +68,18 @@ export const useUsersStore = defineStore('usersStore', {
         console.log(error)
       }
     },
-    async addUser(surname, name, middleName, phone, city, address, birthday, errors, id = null) {
+    async addUser(userData) {
       this.successMessage = ''
 
       try {
         const authorizationStore = useAuthorizationStore()
-        await authorizationStore.refreshToken(this.token)
+        await authorizationStore.refreshToken()
 
-        this.token = useCookie('token').value
+        const data = handleObject(userData)
 
-        const data = {
-          f: surname,
-          i: name,
-          o: middleName,
-          phone: phone,
-          city: city,
-          address: address,
-          birthday: birthday
-        }
-
-        if (isEmptyObj(errors) && !isEmptyObj(data)) {
-          const user = await $fetch(`${this.baseUrl}/records`, {
+        if (isEmptyObj(userData.errors) && !isEmptyObj(data)) {
+          const user = await useFetchApi(`/records`, {
             method: 'POST',
-            headers: { Authorization: `Bearer ${this.token}` },
             body: { ...data }
           })
 
@@ -129,29 +99,18 @@ export const useUsersStore = defineStore('usersStore', {
         console.log(error)
       }
     },
-    async editUser(surname, name, middleName, phone, city, address, birthday, errors, id = null) {
+    async editUser(userData) {
       this.successMessage = ''
 
       try {
         const authorizationStore = useAuthorizationStore()
-        await authorizationStore.refreshToken(this.token)
+        await authorizationStore.refreshToken()
 
-        this.token = useCookie('token').value
+        const data = handleObject(userData)
 
-        const data = {
-          f: surname,
-          i: name,
-          o: middleName,
-          phone: phone,
-          city: city,
-          address: address,
-          birthday: birthday
-        }
-
-        if (isEmptyObj(errors) && !isEmptyObj(data)) {
-          const editUser = await $fetch(`${this.baseUrl}/records/${id}`, {
+        if (isEmptyObj(userData.errors) && !isEmptyObj(data)) {
+          const editUser = await useFetchApi(`/records/${userData.userId}`, {
             method: 'PUT',
-            headers: { Authorization: `Bearer ${this.token}` },
             body: { ...data }
           })
 

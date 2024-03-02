@@ -9,8 +9,7 @@
       </div>
       <form
         @submit.prevent="
-          $emit(
-            'onUserAction',
+          $emit('onUserAction', {
             surname,
             name,
             middleName,
@@ -20,7 +19,7 @@
             birthday,
             errors,
             userId
-          )
+          })
         "
       >
         <div v-if="isEmptyObj(usersStore.user)" class="modal__container-form">
@@ -56,6 +55,7 @@
             <span>{{ errors[userInput.errorName] }}</span>
           </label>
         </div>
+
         <Button type="submit" color="green" class="modal__container-button">
           {{ buttonTitle }}
         </Button>
@@ -79,7 +79,7 @@ import { string, minLength, object, maxLength } from 'valibot'
 const modalProps = defineProps({
   title: String,
   buttonTitle: String,
-  userId: Number
+  userId: Number | null
 })
 
 defineEmits(['closeModal', 'onUserAction'])
