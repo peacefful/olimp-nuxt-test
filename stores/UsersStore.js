@@ -3,9 +3,6 @@ export const useUsersStore = defineStore('usersStore', {
     users: [],
     user: {},
     pagination: {},
-
-    successMessage: '',
-    errorMessage: ''
   }),
   getters: {
     sortByKey: (state) => {
@@ -23,11 +20,10 @@ export const useUsersStore = defineStore('usersStore', {
   },
   actions: {
     async getUsers(n = 1) {
-      this.successMessage = ''
+      clearNotifications()
 
       try {
-        const authorizationStore = useAuthorizationStore()
-        await authorizationStore.refreshToken()
+        await useAuth().refreshToken()
 
         const data = await useFetchApi(`/records?page=${n}`)
 
@@ -40,11 +36,10 @@ export const useUsersStore = defineStore('usersStore', {
       }
     },
     async getUser(id) {
-      this.successMessage = ''
+      clearNotifications()
 
       try {
-        const authorizationStore = useAuthorizationStore()
-        await authorizationStore.refreshToken()
+        await useAuth().refreshToken()
 
         const data = await useFetchApi(`/records/${id}`)
 
@@ -53,38 +48,36 @@ export const useUsersStore = defineStore('usersStore', {
         console.log(error)
       }
     },
-    async deleteUser(id, index) {
+    async deleteUser(userDeleteData) {
       try {
-        const authorizationStore = useAuthorizationStore()
-        await authorizationStore.refreshToken()
+        await useAuth().refreshToken()
 
-        const deleteUser = await useFetchApi(`/records/${id}`, { method: 'DELETE' })
+        const deleteUser = await useFetchApi(`/records/${userDeleteData.id}`, { method: 'DELETE' })
 
         if (deleteUser) {
-          this.users.splice(index, 1)
-          this.successMessage = 'Пользователь удален'
+          this.users.splice(userDeleteData.index, 1)
+          setSuccessMessage('Пользователь удален')
         }
       } catch (error) {
         console.log(error)
       }
     },
     async addUser(userData) {
-      this.successMessage = ''
+      clearNotifications()
 
       try {
-        const authorizationStore = useAuthorizationStore()
-        await authorizationStore.refreshToken()
+        await useAuth().refreshToken()
 
-        const data = handleObject(userData)
+        if (isEmptyObj(userData.errors) && !isEmptyObj(userData)) {
+          const toAddData = handleObject(userData)
 
-        if (isEmptyObj(userData.errors) && !isEmptyObj(data)) {
           const user = await useFetchApi(`/records`, {
             method: 'POST',
-            body: { ...data }
+            body: { ...toAddData }
           })
 
           if (user) {
-            this.successMessage = 'Пользователь добавлен'
+            setSuccessMessage('Пользователь успешно добавлен')
 
             if (this.users.length < 10) {
               return this.users.push(user)
@@ -93,34 +86,30 @@ export const useUsersStore = defineStore('usersStore', {
             }
           }
         } else {
-          this.errorMessage = 'Ошибка, поля некорректные'
+          setErrorMessage('Ошибка, поля некорректные')
         }
       } catch (error) {
         console.log(error)
       }
     },
     async editUser(userData) {
-      this.successMessage = ''
+      clearNotifications()
 
       try {
-        const authorizationStore = useAuthorizationStore()
-        await authorizationStore.refreshToken()
+        await useAuth().refreshToken()
 
-        const data = handleObject(userData)
+        if (isEmptyObj(userData.errors) && !isEmptyObj(userData)) {
+          const toEditData = handleObject(userData)
 
-        if (isEmptyObj(userData.errors) && !isEmptyObj(data)) {
-          const editUser = await useFetchApi(`/records/${userData.userId}`, {
+          const editedUser = await useFetchApi(`/records/${userData.userId}`, {
             method: 'PUT',
-            body: { ...data }
+            body: { ...toEditData }
           })
 
-          if (editUser) {
-            this.successMessage = 'Пользователь сохранен'
-            this.errorMessage = ''
-          }
+          if (editedUser) setSuccessMessage('Пользователь сохранен')
         }
       } catch (error) {
-        this.errorMessage = 'Ошибка, поля некорректные'
+        setErrorMessage('Ошибка, поля некорректные')
       }
     }
   }

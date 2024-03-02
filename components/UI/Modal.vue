@@ -30,7 +30,7 @@
             </div>
             <div>
               {{ userInput.defaultValue }}
-              <Input
+              <UIInput
                 v-model:value="userInput.value"
                 v-bind="userInput.attrs"
                 :type="userInput.type"
@@ -46,7 +46,7 @@
               {{ userInput.label }}
             </div>
             <div>
-              <Input
+              <UIInput
                 v-model:value="userInput.value"
                 v-bind="userInput.attrs"
                 :type="userInput.type"
@@ -56,14 +56,14 @@
           </label>
         </div>
 
-        <Button type="submit" color="green" class="modal__container-button">
+        <UIButton type="submit" color="green" class="modal__container-button">
           {{ buttonTitle }}
-        </Button>
+        </UIButton>
         <div class="success-message">
-          {{ usersStore.successMessage }}
+          {{ successMessage }}
         </div>
         <div class="error-message">
-          {{ usersStore.errorMessage }}
+          {{ errorMessage }}
         </div>
       </form>
     </div>

@@ -1,7 +1,7 @@
 <template>
   <main class="auth">
     <form
-      @submit.prevent="authorizationStore.authorization({ email, password })"
+      @submit.prevent="useAuth().authorization({ email, password })"
       class="auth__container"
     >
       <Logo />
@@ -29,8 +29,6 @@ import { email as emailValidator, string, minLength, object } from 'valibot'
 definePageMeta({
   middleware: ['redirect']
 })
-
-const authorizationStore = useAuthorizationStore()
 
 const { errors, defineField } = useForm({
   validationSchema: toTypedSchema(

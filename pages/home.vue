@@ -5,7 +5,7 @@
         <SilverBookIcon />
         <div>Телефонный справочник</div>
       </div>
-      <UIButton @click="logout" color="silver"> ВЫХОД </UIButton>
+      <UIButton @click="useAuth().logout" color="silver"> ВЫХОД </UIButton>
     </div>
   </header>
   <main class="main">
@@ -29,13 +29,13 @@
           <UIInput :type="userFilter.type" v-model:value="userFilter.value" />
         </label>
       </form>
-      <div v-if="usersStore.users.length">
+      <div v-if="isNotEmptyUsers">
         <ul
           class="main__list"
           v-for="(user, index) in searchUser(sortByKey(key), usersFilter)"
           :key="user.id"
         >
-          <div class="main__item" :class="{ even: index % 2 !== 0 }">
+          <div class="main__item" :class="{ 'bg-silver': isEven(index) }">
             <p>{{ user.f }}</p>
             <p>{{ user.i }}</p>
             <p>{{ user.o }}</p>
@@ -44,12 +44,12 @@
             <p>{{ user.birthday }}</p>
             <p>{{ user.phone }}</p>
             <div class="main__buttons">
-              <button :class="{ even: index % 2 !== 0 }" @click="selectUserById(user.id)">
+              <button :class="{ 'bg-silver': isEven(index) }" @click="selectUserById(user.id)">
                 <EditIcon />
               </button>
               <button
-                :class="{ even: index % 2 !== 0 }"
-                @click="usersStore.deleteUser(user.id, index)"
+                :class="{ 'bg-silver': isEven(index) }"
+                @click="usersStore.deleteUser({ id: user.id, index })"
               >
                 <DeleteIcon />
               </button>
@@ -68,8 +68,8 @@
         button-title="СОХРАНИТЬ"
         v-if="isEditUserModalOpen"
       />
-      <span v-if="usersStore.successMessage === 'Пользователь удален'">
-        {{ usersStore.successMessage }}
+      <span v-if="successMessage === 'Пользователь удален'">
+        {{ successMessage }}
       </span>
       <UIPagination />
     </div>
@@ -90,6 +90,9 @@ const usersStore = useUsersStore()
 const { sortByKey } = storeToRefs(usersStore)
 
 usersStore.getUsers()
+
+const isNotEmptyUsers = computed(() => usersStore.users.length)
+const isEven = index => index % 2 === 0
 
 const {
   isOpenModal: isUserFormModalOpen,
@@ -122,13 +125,6 @@ const usersFilter = reactive([
   { id: 6, title: 'Дата рождения', value: '', type: 'date', key: 'birthday' },
   { id: 7, title: 'Номер телефона', value: '', type: 'text', key: 'phone' }
 ])
-
-const token = useCookie('token')
-
-const logout = () => {
-  token.value = 0
-  navigateTo('/')
-}
 </script>
 
 <style scoped lang="scss">
@@ -218,7 +214,7 @@ header {
       }
     }
 
-    .even {
+    .bg-silver {
       background-color: #ededed;
     }
 
