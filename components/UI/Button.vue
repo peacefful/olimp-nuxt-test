@@ -10,39 +10,6 @@ defineProps({
 })
 </script>
 
-<style scoped lang="scss">
-.button {
-  color: #0098da;
-  background-color: white;
-  border: 1px solid #0098da;
-  cursor: pointer;
-  font-size: 14px;
-  border-radius: 8px;
-  transition: all 60ms ease-in;
-
-  &:hover {
-    background-color: #0098da;
-    color: white;
-  }
-
-  &_silver {
-    color: #909090;
-    border: 1px solid #909090;
-
-    &:hover {
-      background-color: #909090;
-      color: white;
-    }
-  }
-
-  &_green {
-    color: #80cc05;
-    border: 1px solid #80cc05;
-
-    &:hover {
-      background-color: #80cc05;
-      color: white;
-    }
-  }
-}
+<style>
+@import url("@/assets/styles/button.scss");
 </style>

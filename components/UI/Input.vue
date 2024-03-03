@@ -23,10 +23,6 @@ const value = computed({
 })
 </script>
 
-<style scoped lang="scss">
-input {
-  margin-top: 5px;
-  box-shadow: 0px 0px 4px 0px #00000026 inset;
-  border-radius: 4px;
-}
+<style>
+@import url("@/assets/styles/input.scss");
 </style>
