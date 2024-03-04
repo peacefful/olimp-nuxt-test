@@ -1,0 +1,35 @@
+@import '@/assets/styles/variables.scss';
+
+.button {
+  color: $primary;
+  background-color: white;
+  border: 1px solid $primary;
+  font-size: 14px;
+  border-radius: 8px;
+  transition: all 60ms ease-in;
+
+  &:hover {
+    background-color: $primary;
+    color: white;
+  }
+
+  &_silver {
+    color: $neutral;
+    border: 1px solid $neutral;
+
+    &:hover {
+      background-color: $neutral;
+      color: white;
+    }
+  }
+
+  &_green {
+    color: $active;
+    border: 1px solid $active;
+
+    &:hover {
+      background-color: $active;
+      color: white;
+    }
+  }
+}

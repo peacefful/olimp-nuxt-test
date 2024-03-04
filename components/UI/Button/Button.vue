@@ -11,5 +11,5 @@ defineProps({
 </script>
 
 <style>
-@import url("@/assets/styles/button.scss");
+@import url("./style.module.scss");
 </style>

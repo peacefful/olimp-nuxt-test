@@ -1,5 +1,5 @@
 <template>
-  <input v-model="value" :type="type" />
+  <input class="input" v-model="value" :type="type" />
 </template>
 
 <script setup>
@@ -24,5 +24,5 @@ const value = computed({
 </script>
 
 <style>
-@import url("@/assets/styles/input.scss");
+@import url("./style.module.scss");
 </style>

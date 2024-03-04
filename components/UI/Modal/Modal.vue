@@ -184,6 +184,6 @@ const userForm = reactive([
 ])
 </script>
 
-<style>
-@import url("@/assets/styles/modal.scss");
+<style scoped>
+@import url("./style.module.scss");
 </style>

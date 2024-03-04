@@ -1,3 +1,5 @@
+@import '@/assets/styles/variables.scss';
+
 .pagination {
   display: flex;
   justify-content: space-between;
@@ -13,41 +15,28 @@
       gap: 5px;
     }
 
+    // 0098da
     .active {
-      background-color: #0098da;
+      background-color: $primary;
       color: white;
     }
 
     .pagination__button {
-      width: 32px;
-      height: 32px;
-      border: 1px solid #2c2e3526;
-      border-radius: 4px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
+      @extend %pagination-button;
 
       &:hover {
         transition: all ease-in 100ms;
-        background-color: #01a3e9;
+        background-color: $primary;
         color: white;
       }
 
       &:active {
-        background-color: #31c1ff;
+        background-color: $primary;
       }
     }
 
     .pagination__navigate {
-      width: 32px;
-      height: 32px;
-      border: 1px solid #2c2e3526;
-      border-radius: 4px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
+      @extend %pagination-button;
 
       &:hover {
         background-color: #dbdbdb;

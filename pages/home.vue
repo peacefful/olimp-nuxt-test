@@ -68,9 +68,9 @@
         button-title="СОХРАНИТЬ"
         v-if="isEditUserModalOpen"
       />
-      <span v-if="successMessage === 'Пользователь удален'">
+      <div class="success-message" v-if="successMessage === 'Пользователь удален'">
         {{ successMessage }}
-      </span>
+      </div>
       <UIPagination />
     </div>
   </main>
@@ -92,7 +92,7 @@ const { sortByKey } = storeToRefs(usersStore)
 usersStore.getUsers()
 
 const isNotEmptyUsers = computed(() => usersStore.users.length)
-const isEven = index => index % 2 === 0
+const isEven = index => index % 2
 
 const {
   isOpenModal: isUserFormModalOpen,

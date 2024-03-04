@@ -93,5 +93,5 @@ const selectPage = (page) => {
 </script>
 
 <style>
-@import url("@/assets/styles/pagination.scss");
+@import url("./style.module.scss");
 </style>

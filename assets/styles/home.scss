@@ -1,16 +1,18 @@
+@import './variables.scss';
+
 Button {
   padding: 1.2% 2.2%;
 }
 
 header {
-  box-shadow: 0px 12px 24px 0px #00000026;
+  box-shadow: $shadow;
 
   .header__wrapper {
     max-width: 1200px;
+    padding: 0.5% 0%;
     margin: auto;
     display: flex;
     justify-content: space-between;
-    padding: 0.5% 0%;
 
     .header__title {
       display: flex;
@@ -32,22 +34,15 @@ header {
     padding: 24px 15px;
     background-color: #ffffff;
     border-radius: 8px;
-    box-shadow: 0px 12px 24px 0px #00000026;
-
-    span {
-      margin-top: 1%;
-      display: block;
-      color: red;
-    }
+    box-shadow: $shadow;
 
     .main__form {
       margin-top: 25px;
-      display: flex;
       gap: 10px;
+      display: flex;
       flex-wrap: wrap;
 
       .main__form-filter {
-        font-size: 14px;
         display: flex;
         justify-content: space-between;
       }
@@ -65,10 +60,10 @@ header {
     }
 
     .main__item {
-      display: flex;
       width: 100%;
-      justify-content: space-between;
       gap: 10px;
+      display: flex;
+      justify-content: space-between;
 
       p {
         padding: 1% 0.5%;
