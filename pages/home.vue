@@ -19,7 +19,7 @@
         v-if="isUserFormModalOpen"
       />
       <form class="main__form">
-        <label v-for="userFilter in usersFilter" :key="userFilter.id">
+        <label v-for="userFilter in userFilters" :key="userFilter.id">
           <div class="main__form-filter">
             <strong>{{ userFilter.title }}</strong>
             <button @click.prevent="key = userFilter.key">
@@ -32,7 +32,7 @@
       <div v-if="isNotEmptyUsers">
         <ul
           class="main__list"
-          v-for="(user, index) in searchUser(sortByKey(key), usersFilter)"
+          v-for="(user, index) in searchUser(sortByKey(key), userFilters)"
           :key="user.id"
         >
           <div class="main__item" :class="{ 'bg-silver': isEven(index) }">
@@ -92,7 +92,7 @@ const { sortByKey } = storeToRefs(usersStore)
 usersStore.getUsers()
 
 const isNotEmptyUsers = computed(() => usersStore.users.length)
-const isEven = index => index % 2
+const isEven = (index) => index % 2
 
 const {
   isOpenModal: isUserFormModalOpen,
@@ -116,17 +116,52 @@ const unSelectUserById = () => {
   closeEditUserModal()
 }
 
-const usersFilter = reactive([
-  { id: 1, title: 'Фамилия', value: '', type: 'text', key: 'f' },
-  { id: 2, title: 'Имя', value: '', type: 'text', key: 'i' },
-  { id: 3, title: 'Отчество', value: '', type: 'text', key: 'o' },
-  { id: 4, title: 'Город', value: '', type: 'text', key: 'city' },
-  { id: 5, title: 'Адрес', value: '', type: 'text', key: 'address' },
-  { id: 6, title: 'Дата рождения', value: '', type: 'date', key: 'birthday' },
-  { id: 7, title: 'Номер телефона', value: '', type: 'text', key: 'phone' }
+const userFilters = reactive([
+  { id: 1, 
+    title: 'Фамилия', 
+    value: '', 
+    type: 'text', 
+    key: 'f' 
+  },
+  { id: 2, 
+    title: 'Имя', 
+    value: '', 
+    type: 'text', 
+    key: 'i' 
+  },
+  { id: 3, 
+    title: 'Отчество', 
+    value: '', 
+    type: 'text', 
+    key: 'o' 
+  },
+  { id: 4, 
+    title: 'Город', 
+    value: '', 
+    type: 'text', 
+    key: 'city' 
+  },
+  { id: 5, 
+    title: 'Адрес', 
+    value: '', 
+    type: 'text', 
+    key: 'address' 
+  },
+  { id: 6, 
+    title: 'Дата рождения', 
+    value: '', 
+    type: 'date', 
+    key: 'birthday' 
+  },
+  { id: 7, 
+    title: 'Номер телефона', 
+    value: '', 
+    type: 'text', 
+    key: 'phone' 
+  }
 ])
 </script>
 
 <style>
-@import url("@/assets/styles/home.scss");
+@import url('@/assets/styles/home.scss');
 </style>

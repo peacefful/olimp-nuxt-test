@@ -55,7 +55,7 @@
             <span>{{ errors[userInput.errorName] }}</span>
           </label>
         </div>
-
+        {{ errors }}
         <UIButton type="submit" color="green" class="modal__container-button">
           {{ buttonTitle }}
         </UIButton>
@@ -185,5 +185,5 @@ const userForm = reactive([
 </script>
 
 <style scoped>
-@import url("./style.module.scss");
+@import url('./style.module.scss');
 </style>

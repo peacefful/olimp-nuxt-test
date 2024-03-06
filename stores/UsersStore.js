@@ -2,7 +2,7 @@ export const useUsersStore = defineStore('usersStore', {
   state: () => ({
     users: [],
     user: {},
-    pagination: {},
+    pagination: {}
   }),
   getters: {
     sortByKey: (state) => {
@@ -19,6 +19,13 @@ export const useUsersStore = defineStore('usersStore', {
     }
   },
   actions: {
+    deleteUserByIndex(index) {
+      this.users.splice(index, 1)
+    },
+    addUsers(user) {
+      this.users.push(user)
+    },
+    
     async getUsers(n = 1) {
       clearNotifications()
 
@@ -55,7 +62,7 @@ export const useUsersStore = defineStore('usersStore', {
         const deleteUser = await useFetchApi(`/records/${userDeleteData.id}`, { method: 'DELETE' })
 
         if (deleteUser) {
-          this.users.splice(userDeleteData.index, 1)
+          this.deleteUserByIndex(userDeleteData.index)
           setSuccessMessage('Пользователь удален')
         }
       } catch (error) {
@@ -69,18 +76,18 @@ export const useUsersStore = defineStore('usersStore', {
         await useAuth().refreshToken()
 
         if (isEmptyObj(userData.errors) && !isEmptyObj(userData)) {
-          const toAddData = handleObject(userData)
+          const toAddUser = handleObject(userData)
 
-          const user = await useFetchApi(`/records`, {
+          const newUser = await useFetchApi(`/records`, {
             method: 'POST',
-            body: { ...toAddData }
+            body: { ...toAddUser }
           })
 
-          if (user) {
+          if (newUser) {
             setSuccessMessage('Пользователь успешно добавлен')
 
             if (this.users.length < 10) {
-              return this.users.push(user)
+              this.addUsers(newUser)
             } else {
               return
             }
