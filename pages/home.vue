@@ -1,13 +1,4 @@
 <template>
-  <header class="header">
-    <div class="header__wrapper">
-      <div class="header__title">
-        <SilverBookIcon />
-        <div>Телефонный справочник</div>
-      </div>
-      <UIButton @click="useAuth().logout" color="silver"> ВЫХОД </UIButton>
-    </div>
-  </header>
   <main class="main">
     <div class="main__content">
       <UIButton @click="openUserFormModal"> ДОБАВИТЬ ЗАПИСЬ </UIButton>
@@ -77,11 +68,15 @@
 </template>
 
 <script setup>
-import SilverBookIcon from '@/assets/icons/SilverBookIcon.vue'
+
 import ArrowsIcon from '@/assets/icons/ArrowsIcon.vue'
 import EditIcon from '@/assets/icons/EditIcon.vue'
 import DeleteIcon from '@/assets/icons/DeleteIcon.vue'
 import { reactive } from 'vue'
+
+definePageMeta({
+  layout: "custom"
+})
 
 const key = ref(null)
 const userId = ref(0)
@@ -117,49 +112,15 @@ const unSelectUserById = () => {
 }
 
 const userFilters = reactive([
-  { id: 1, 
-    title: 'Фамилия', 
-    value: '', 
-    type: 'text', 
-    key: 'f' 
-  },
-  { id: 2, 
-    title: 'Имя', 
-    value: '', 
-    type: 'text', 
-    key: 'i' 
-  },
-  { id: 3, 
-    title: 'Отчество', 
-    value: '', 
-    type: 'text', 
-    key: 'o' 
-  },
-  { id: 4, 
-    title: 'Город', 
-    value: '', 
-    type: 'text', 
-    key: 'city' 
-  },
-  { id: 5, 
-    title: 'Адрес', 
-    value: '', 
-    type: 'text', 
-    key: 'address' 
-  },
-  { id: 6, 
-    title: 'Дата рождения', 
-    value: '', 
-    type: 'date', 
-    key: 'birthday' 
-  },
-  { id: 7, 
-    title: 'Номер телефона', 
-    value: '', 
-    type: 'text', 
-    key: 'phone' 
-  }
+  { id: 1, title: 'Фамилия', value: '', type: 'text', key: 'f' },
+  { id: 2, title: 'Имя', value: '', type: 'text', key: 'i' },
+  { id: 3, title: 'Отчество', value: '', type: 'text', key: 'o' },
+  { id: 4, title: 'Город', value: '', type: 'text', key: 'city' },
+  { id: 5, title: 'Адрес', value: '', type: 'text', key: 'address' },
+  { id: 6, title: 'Дата рождения', value: '', type: 'date', key: 'birthday' },
+  { id: 7, title: 'Номер телефона', value: '', type: 'text', key: 'phone' }
 ])
+
 </script>
 
 <style>
