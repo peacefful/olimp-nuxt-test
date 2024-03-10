@@ -1,64 +1,25 @@
 <template>
   <form class="main__form">
-    <label v-for="userFilter in userFilters" :key="userFilter.id">
+    <label v-for="(userFilter, index) in usersFiltering.filter" :key="index">
       <div class="main__form-filter">
         <strong>{{ userFilter.title }}</strong>
-        <button @click.prevent="key = userFilter.key">
+        <button @click.prevent="$emit('select-key', userFilter.key)">
           <ArrowsIcon />
         </button>
       </div>
-      <UIInput :type="userFilter.type" v-model:value="userFilter.value" />
+      <UIInput
+        class="main__form-input"
+        :type="userFilter.type" 
+        v-model:value="userFilter.value" 
+      />
     </label>
   </form>
 </template>
 
 <script setup>
-defineProps({
-  key: String
-})
+import ArrowsIcon from '@/assets/icons/ArrowsIcon.vue'
 
-const userFilters = reactive([
-  { id: 1, 
-    title: 'Фамилия', 
-    value: '', 
-    type: 'text', 
-    key: 'f' 
-  },
-  { id: 2, 
-    title: 'Имя', 
-    value: '', 
-    type: 'text', 
-    key: 'i' 
-  },
-  { id: 3, 
-    title: 'Отчество', 
-    value: '', 
-    type: 'text', 
-    key: 'o' 
-  },
-  { id: 4, 
-    title: 'Город', 
-    value: '', 
-    type: 'text', 
-    key: 'city' 
-  },
-  { id: 5, 
-    title: 'Адрес', 
-    value: '', 
-    type: 'text', 
-    key: 'address' 
-  },
-  { id: 6, 
-    title: 'Дата рождения', 
-    value: '', 
-    type: 'date', 
-    key: 'birthday' 
-  },
-  { id: 7, 
-    title: 'Номер телефона', 
-    value: '', 
-    type: 'text', 
-    key: 'phone' 
-  }
-])
+defineEmits(['select-key'])
+
+const usersFiltering = useUsersFiltering()
 </script>

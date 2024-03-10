@@ -25,7 +25,7 @@ export const useUsersStore = defineStore('usersStore', {
     addUsers(user) {
       this.users.push(user)
     },
-    
+
     async getUsers(n = 1) {
       clearNotifications()
 
@@ -59,7 +59,9 @@ export const useUsersStore = defineStore('usersStore', {
       try {
         await useAuth().refreshToken()
 
-        const deleteUser = await useFetchApi(`/records/${userDeleteData.id}`, { method: 'DELETE' })
+        const deleteUser = await useFetchApi(`/records/${userDeleteData.id}`, {
+          method: 'DELETE'
+        })
 
         if (deleteUser) {
           this.deleteUserByIndex(userDeleteData.index)
@@ -76,7 +78,7 @@ export const useUsersStore = defineStore('usersStore', {
         await useAuth().refreshToken()
 
         if (isEmptyObj(userData.errors) && !isEmptyObj(userData)) {
-          const toAddUser = handleObject(userData)
+          const toAddUser = handleServerObject(userData)
 
           const newUser = await useFetchApi(`/records`, {
             method: 'POST',
@@ -99,16 +101,19 @@ export const useUsersStore = defineStore('usersStore', {
         console.log(error)
       }
     },
-    async editUser(userData) {
+    async editUser(user) {
       clearNotifications()
 
       try {
         await useAuth().refreshToken()
 
-        if (isEmptyObj(userData.errors) && !isEmptyObj(userData)) {
-          const toEditData = handleObject(userData)
+        const id = user.userId
+        const processedData = handleValidationObject(user.data)
 
-          const editedUser = await useFetchApi(`/records/${userData.userId}`, {
+        if (isEmptyObj(user.errors) && !isEmptyObj(processedData)) {
+          const toEditData = handleServerObject(processedData)
+
+          const editedUser = await useFetchApi(`/records/${id}`, {
             method: 'PUT',
             body: { ...toEditData }
           })

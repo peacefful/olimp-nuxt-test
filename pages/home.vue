@@ -3,30 +3,21 @@
     <div class="main__content">
       <UIButton @click="openUserFormModal"> ДОБАВИТЬ ЗАПИСЬ </UIButton>
       <UIModal
-        @on-user-action="usersStore.addUser"
+        @user-action="usersStore.addUser"
         @close-modal="closeUserFormModal"
         button-title="ДОБАВИТЬ"
         title="Добавить запись"
         v-if="isUserFormModalOpen"
       />
-      <form class="main__form">
-        <label v-for="userFilter in userFilters" :key="userFilter.id">
-          <div class="main__form-filter">
-            <strong>{{ userFilter.title }}</strong>
-            <button @click.prevent="key = userFilter.key">
-              <ArrowsIcon />
-            </button>
-          </div>
-          <UIInput :type="userFilter.type" v-model:value="userFilter.value" />
-        </label>
-      </form>
+
+      <UserFilters @select-key="selectKey" />
       <div v-if="isNotEmptyUsers">
         <ul
           class="main__list"
-          v-for="(user, index) in searchUser(sortByKey(key), userFilters)"
+          v-for="(user, index) in usersFiltering.searchUser(sortByKey(key))"
           :key="user.id"
         >
-          <div class="main__item" :class="{ 'bg-silver': isEven(index) }">
+          <div class="main__item" :class="isEven(index)">
             <p>{{ user.f }}</p>
             <p>{{ user.i }}</p>
             <p>{{ user.o }}</p>
@@ -35,13 +26,10 @@
             <p>{{ user.birthday }}</p>
             <p>{{ user.phone }}</p>
             <div class="main__buttons">
-              <button :class="{ 'bg-silver': isEven(index) }" @click="selectUserById(user.id)">
+              <button :class="isEven(index)" @click="selectUserById(user.id)">
                 <EditIcon />
               </button>
-              <button
-                :class="{ 'bg-silver': isEven(index) }"
-                @click="usersStore.deleteUser({ id: user.id, index })"
-              >
+              <button :class="isEven(index)" @click="usersStore.deleteUser({ id: user.id, index })">
                 <DeleteIcon />
               </button>
             </div>
@@ -53,13 +41,13 @@
       </div>
       <UIModal
         @close-modal="unSelectUserById"
-        @on-user-action="usersStore.editUser"
+        @user-action="usersStore.editUser"
         :user-id="userId"
         title="Редактировать пользователя"
         button-title="СОХРАНИТЬ"
         v-if="isEditUserModalOpen"
       />
-      <div class="success-message" v-if="successMessage === 'Пользователь удален'">
+      <div class="success-status" v-if="successMessage === 'Пользователь удален'">
         {{ successMessage }}
       </div>
       <UIPagination />
@@ -68,26 +56,26 @@
 </template>
 
 <script setup>
-
-import ArrowsIcon from '@/assets/icons/ArrowsIcon.vue'
 import EditIcon from '@/assets/icons/EditIcon.vue'
 import DeleteIcon from '@/assets/icons/DeleteIcon.vue'
-import { reactive } from 'vue'
 
 definePageMeta({
-  layout: "custom"
+  layout: 'custom'
 })
 
 const key = ref(null)
 const userId = ref(0)
 
 const usersStore = useUsersStore()
+const usersFiltering = useUsersFiltering()
+
 const { sortByKey } = storeToRefs(usersStore)
+const isNotEmptyUsers = computed(() => usersStore.users.length)
 
 usersStore.getUsers()
 
-const isNotEmptyUsers = computed(() => usersStore.users.length)
-const isEven = (index) => index % 2
+const selectKey = (prop) => (key.value = prop)
+const isEven = (index) => (index % 2 ? 'bg-silver' : '')
 
 const {
   isOpenModal: isUserFormModalOpen,
@@ -110,17 +98,6 @@ const unSelectUserById = () => {
   usersStore.user = {}
   closeEditUserModal()
 }
-
-const userFilters = reactive([
-  { id: 1, title: 'Фамилия', value: '', type: 'text', key: 'f' },
-  { id: 2, title: 'Имя', value: '', type: 'text', key: 'i' },
-  { id: 3, title: 'Отчество', value: '', type: 'text', key: 'o' },
-  { id: 4, title: 'Город', value: '', type: 'text', key: 'city' },
-  { id: 5, title: 'Адрес', value: '', type: 'text', key: 'address' },
-  { id: 6, title: 'Дата рождения', value: '', type: 'date', key: 'birthday' },
-  { id: 7, title: 'Номер телефона', value: '', type: 'text', key: 'phone' }
-])
-
 </script>
 
 <style>

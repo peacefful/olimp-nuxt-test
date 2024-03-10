@@ -44,10 +44,10 @@ input[type='date'] {
   @extend %font-weigth;
 }
 
-.success-message {
+.success-status {
   @include toast($active)
 }
 
-.error-message {
+.error-status {
   @include toast($danger)
 }

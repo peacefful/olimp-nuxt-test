@@ -1,4 +1,4 @@
-export const handleObject = (obj) => {
+export const handleServerObject = (obj) => {
   return {
     f: obj.surname,
     i: obj.name,
@@ -8,4 +8,13 @@ export const handleObject = (obj) => {
     address: obj.address,
     birthday: obj.birthday
   }
+}
+
+export const handleValidationObject = (userData) => {
+  const currentUserData = {}
+  for (const iterator of Object.values(userData)) {
+    currentUserData[iterator.name] = iterator.value
+  }
+
+  return currentUserData
 }

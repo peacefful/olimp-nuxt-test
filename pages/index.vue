@@ -1,19 +1,24 @@
 <template>
   <main class="auth">
     <form
-      @submit.prevent="useAuth().authorization({ email, password })"
+      @submit.prevent="useAuth().authorization(userAuth)"
       class="auth__container"
     >
       <Logo />
       <label>
         <p>E-mail</p>
-        <UIInput v-model:value="email" v-bind="emailAttrs" type="text" />
-        <div class="auth__error">{{ errors.email }}</div>
+        <UIInputValidation
+          name="email" 
+          v-model="userAuth.email" 
+        />
       </label>
       <label>
         <p>Пароль</p>
-        <UIInput v-model:value="password" v-bind="passwordAttrs" type="password" />
-        <div class="auth__error">{{ errors.password }}</div>
+        <UIInputValidation
+          name="password" 
+          type="password" 
+          v-model="userAuth.password" 
+        />
       </label>
       <UIButton> ВОЙТИ </UIButton>
     </form>
@@ -30,7 +35,7 @@ definePageMeta({
   middleware: ['redirect']
 })
 
-const { errors, defineField } = useForm({
+useForm({
   validationSchema: toTypedSchema(
     object({
       email: string([
@@ -40,14 +45,12 @@ const { errors, defineField } = useForm({
       password: string([minLength(6, 'Пароль слишком короткий')])
     })
   ),
-  initialValues: {
-    email: '',
-    password: ''
-  }
 })
 
-const [email, emailAttrs] = defineField('email')
-const [password, passwordAttrs] = defineField('password')
+const userAuth = reactive({
+  email: "",
+  password: ""
+})
 </script>
 
 <style>
