@@ -8,18 +8,7 @@
         </button>
       </div>
       <form @submit.prevent="$emit('user-action', { data: userForm, errors, userId })">
-        <div v-if="isEmptyObj(usersStore.user)" class="modal__container-form">
-          <label v-for="(userInput, index) in userForm" :key="index" class="modal__container-row">
-            <div v-if="userInput.title !== 'Отчество'"><span>*</span>{{ userInput.title }}</div>
-            <div v-else>{{ userInput.title }}</div>
-            <UIInputValidation
-              :name="userInput.name"
-              :type="userInput.type"
-              v-model="userInput.value"
-            />
-          </label>
-        </div>
-        <div v-else class="modal__container-form">
+        <div class="modal__container-form">
           <label v-for="(userInput, index) in userForm" :key="index" class="modal__container-row">
             <div v-if="userInput.title !== 'Отчество'"><span>*</span>{{ userInput.title }}</div>
             <div v-else>{{ userInput.title }}</div>
@@ -124,6 +113,6 @@ const userForm = reactive([
 ])
 </script>
 
-<style scoped>
+<style>
 @import url('./style.module.scss');
 </style>

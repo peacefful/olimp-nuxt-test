@@ -6,6 +6,6 @@ export default defineNuxtConfig({
     }
   },
   devtools: { enabled: true },
-  css: ['~/assets/styles/main.scss', "~/assets/styles/variables.scss"],
+  css: ['~/assets/styles/main.scss', "~/assets/styles/vars.scss"],
   modules: ['@vee-validate/nuxt', '@pinia/nuxt']
 })
