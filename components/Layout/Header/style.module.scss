@@ -1,0 +1,22 @@
+@import "@/assets/styles/vars.scss";
+
+.header {
+  box-shadow: $shadow;
+
+  .header__wrapper {
+    max-width: 1200px;
+    padding: 0.5% 0%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+
+    .header__title {
+      display: flex;
+      align-items: center;
+
+      div {
+        font-size: 16px;
+      }
+    }
+  }
+}

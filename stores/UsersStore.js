@@ -71,14 +71,16 @@ export const useUsersStore = defineStore('usersStore', {
         console.log(error)
       }
     },
-    async addUser(userData) {
+    async addUser(user) {
       clearNotifications()
 
       try {
         await useAuth().refreshToken()
 
-        if (isEmptyObj(userData.errors) && !isEmptyObj(userData)) {
-          const toAddUser = handleServerObject(userData)
+        const processedData = handleValidationObject(user.data)
+
+        if (isEmptyObj(user.errors) && !isEmptyObj(processedData)) {
+          const toAddUser = handleServerObject(processedData)
 
           const newUser = await useFetchApi(`/records`, {
             method: 'POST',
@@ -88,11 +90,7 @@ export const useUsersStore = defineStore('usersStore', {
           if (newUser) {
             setSuccessMessage('Пользователь успешно добавлен')
 
-            if (this.users.length < 10) {
-              this.addUsers(newUser)
-            } else {
-              return
-            }
+            if (this.users.length < 10) this.addUsers(newUser)
           }
         } else {
           setErrorMessage('Ошибка, поля некорректные')

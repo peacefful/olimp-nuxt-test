@@ -13,3 +13,7 @@
 <script setup>
 import SilverBookIcon from '@/assets/icons/SilverBookIcon.vue'
 </script>
+
+<style>
+@import url("./style.module.scss");
+</style>

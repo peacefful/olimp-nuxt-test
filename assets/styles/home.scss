@@ -1,30 +1,5 @@
 @import './vars.scss';
 
-Button {
-  padding: 1.2% 2.2%;
-}
-
-header {
-  box-shadow: $shadow;
-
-  .header__wrapper {
-    max-width: 1200px;
-    padding: 0.5% 0%;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-
-    .header__title {
-      display: flex;
-      align-items: center;
-
-      div {
-        font-size: 16px;
-      }
-    }
-  }
-}
-
 .main {
   max-width: 1200px;
   margin: auto;
@@ -35,18 +10,6 @@ header {
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: $shadow;
-
-    .main__form {
-      margin-top: 25px;
-      gap: 10px;
-      display: flex;
-      flex-wrap: wrap;
-
-      .main__form-filter {
-        display: flex;
-        justify-content: space-between;
-      }
-    }
 
     .main__list {
       display: flex;
@@ -94,5 +57,9 @@ header {
     padding: 10px;
     width: 128px;
     margin-top: 15px;
+  }
+
+  Button {
+    padding: 1.2% 2.2%;
   }
 }

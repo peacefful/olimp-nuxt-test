@@ -103,6 +103,7 @@ const userForm = reactive([
   {
     title: 'Дата рождения',
     name: 'birthday',
+    type: "Date",
     value: isEmptyValue(usersStore.user.birthday)
   },
   {

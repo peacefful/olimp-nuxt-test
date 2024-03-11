@@ -1,5 +1,3 @@
-import { ref } from 'vue'
-
 export const useToogleModal = () => {
   const isOpenModal = ref(false)
 

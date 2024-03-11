@@ -1,0 +1,11 @@
+.main__form {
+  margin-top: 25px;
+  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+
+  .main__form-filter {
+    display: flex;
+    justify-content: space-between;
+  }
+}

@@ -7,11 +7,7 @@
           <ArrowsIcon />
         </button>
       </div>
-      <UIInput
-        class="main__form-input"
-        :type="userFilter.type" 
-        v-model:value="userFilter.value" 
-      />
+      <UIInput :type="userFilter.type" v-model:value="userFilter.value" />
     </label>
   </form>
 </template>
@@ -23,3 +19,7 @@ defineEmits(['select-key'])
 
 const usersFiltering = useUsersFiltering()
 </script>
+
+<style>
+@import url('./style.module.scss');
+</style>
