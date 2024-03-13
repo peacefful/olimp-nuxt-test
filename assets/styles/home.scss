@@ -1,5 +1,9 @@
 @import './vars.scss';
 
+Button {
+  padding: 1.2% 2.2%;
+}
+
 .main {
   max-width: 1200px;
   margin: auto;
@@ -57,9 +61,5 @@
     padding: 10px;
     width: 128px;
     margin-top: 15px;
-  }
-
-  Button {
-    padding: 1.2% 2.2%;
   }
 }

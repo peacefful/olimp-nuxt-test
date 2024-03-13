@@ -10,8 +10,8 @@
       <form @submit.prevent="$emit('user-action', { data: userForm, errors, userId })">
         <div class="modal__container-form">
           <label v-for="(userInput, index) in userForm" :key="index" class="modal__container-row">
-            <div v-if="userInput.title !== 'Отчество'"><span>*</span>{{ userInput.title }}</div>
-            <div v-else>{{ userInput.title }}</div>
+            <div v-if="userInput.title === 'Отчество'">{{ userInput.title }}</div>
+            <div v-else><span>*</span>{{ userInput.title }}</div>
             <UIInputValidation
               :name="userInput.name"
               :type="userInput.type"
@@ -49,7 +49,7 @@ defineEmits(['close-modal', 'user-action'])
 
 const usersStore = useUsersStore()
 
-modalProps.userId && await usersStore.getUser(modalProps.userId)
+modalProps.userId && (await usersStore.getUser(modalProps.userId))
 
 const { errors } = useForm({
   validationSchema: toTypedSchema(
@@ -103,7 +103,7 @@ const userForm = reactive([
   {
     title: 'Дата рождения',
     name: 'birthday',
-    type: "Date",
+    type: 'Date',
     value: isEmptyValue(usersStore.user.birthday)
   },
   {
