@@ -1,9 +1,9 @@
 export const useUsersFiltering = defineStore('usersFiltering', {
   state: () => ({
     filter: [
-      { title: 'Фамилия', value: '', type: 'text', key: 'f' },
-      { title: 'Имя', value: '', type: 'text', key: 'i' },
-      { title: 'Отчество', value: '', type: 'text', key: 'o' },
+      { title: 'Фамилия', value: '', type: 'text', key: 'surname' },
+      { title: 'Имя', value: '', type: 'text', key: 'name' },
+      { title: 'Отчество', value: '', type: 'text', key: 'middlename' },
       { title: 'Город', value: '', type: 'text', key: 'city' },
       { title: 'Адрес', value: '', type: 'text', key: 'address' },
       { title: 'Дата рождения', value: '', type: 'date', key: 'birthday' },

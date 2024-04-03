@@ -35,7 +35,7 @@ export const useUsersStore = defineStore('usersStore', {
         const data = await useFetchApi(`/records?page=${n}`)
 
         if (data?.items) {
-          this.users = data.items
+          this.users = handleClientObject(data.items)
           this.pagination = data._meta
         }
       } catch (error) {

@@ -18,9 +18,9 @@
           :key="user.id"
         >
           <div class="main__item" :class="isEven(index)">
-            <p>{{ user.f }}</p>
-            <p>{{ user.i }}</p>
-            <p>{{ user.o }}</p>
+            <p>{{ user.surname }}</p>
+            <p>{{ user.name }}</p>
+            <p>{{ user.middlename }}</p>
             <p>{{ user.city }}</p>
             <p>{{ user.address }}</p>
             <p>{{ user.birthday }}</p>

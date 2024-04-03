@@ -1,18 +1,32 @@
-export const handleServerObject = (obj) => {
+export const handleServerObject = (user) => {
   return {
-    f: obj.surname,
-    i: obj.name,
-    o: obj.middleName,
-    phone: obj.phone,
-    city: obj.city,
-    address: obj.address,
-    birthday: obj.birthday
+    f: user.surname,
+    i: user.name,
+    o: user.middleName,
+    phone: user.phone,
+    city: user.city,
+    address: user.address,
+    birthday: user.birthday
   }
 }
 
-export const handleValidationObject = (userData) => {
+export const handleClientObject = (users) => {
+  return users.map((user) => {
+    return {
+      name: user.i,
+      surname: user.f,
+      middlename: user.o,
+      phone: user.phone,
+      city: user.city,
+      address: user.address,
+      birthday: user.birthday
+    }
+  })
+}
+
+export const handleValidationObject = (user) => {
   const currentUserData = {}
-  for (const iterator of Object.values(userData)) {
+  for (const iterator of Object.values(user)) {
     currentUserData[iterator.name] = iterator.value
   }
 
