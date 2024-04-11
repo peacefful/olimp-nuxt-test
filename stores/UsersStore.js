@@ -76,8 +76,7 @@ export const useUsersStore = defineStore('usersStore', {
 
       try {
         await useAuth().refreshToken()
-
-        const processedData = handleClientUsers(user.data)
+        const processedData = handleValidationObject(user.data)
 
         if (isEmptyObj(user.errors) && !isEmptyObj(processedData)) {
           const toAddUser = handleServerObject(processedData)
