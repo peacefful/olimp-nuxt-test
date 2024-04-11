@@ -35,7 +35,7 @@ export const useUsersStore = defineStore('usersStore', {
         const data = await useFetchApi(`/records?page=${n}`)
 
         if (data?.items) {
-          this.users = handleClientObject(data.items)
+          this.users = handleClientUsers(data.items)
           this.pagination = data._meta
         }
       } catch (error) {
@@ -50,7 +50,7 @@ export const useUsersStore = defineStore('usersStore', {
 
         const data = await useFetchApi(`/records/${id}`)
 
-        data ? (this.user = data) : null
+        this.user = data ? handleClientUser(data) : null
       } catch (error) {
         console.log(error)
       }
@@ -77,7 +77,7 @@ export const useUsersStore = defineStore('usersStore', {
       try {
         await useAuth().refreshToken()
 
-        const processedData = handleValidationObject(user.data)
+        const processedData = handleClientUsers(user.data)
 
         if (isEmptyObj(user.errors) && !isEmptyObj(processedData)) {
           const toAddUser = handleServerObject(processedData)
@@ -101,7 +101,6 @@ export const useUsersStore = defineStore('usersStore', {
     },
     async editUser(user) {
       clearNotifications()
-
       try {
         await useAuth().refreshToken()
 
@@ -110,7 +109,6 @@ export const useUsersStore = defineStore('usersStore', {
 
         if (isEmptyObj(user.errors) && !isEmptyObj(processedData)) {
           const toEditData = handleServerObject(processedData)
-
           const editedUser = await useFetchApi(`/records/${id}`, {
             method: 'PUT',
             body: { ...toEditData }

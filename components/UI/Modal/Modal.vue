@@ -78,17 +78,17 @@ const userForm = reactive([
   {
     title: 'Фамилия',
     name: 'surname',
-    value: isEmptyValue(usersStore.user.f)
+    value: isEmptyValue(usersStore.user.surname)
   },
   {
     title: 'Имя',
     name: 'name',
-    value: isEmptyValue(usersStore.user.i)
+    value: isEmptyValue(usersStore.user.name)
   },
   {
     title: 'Отчество',
     name: 'middleName',
-    value: isEmptyValue(usersStore.user.o)
+    value: isEmptyValue(usersStore.user.middlename)
   },
   {
     title: 'Город',
