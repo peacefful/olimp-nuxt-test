@@ -30,8 +30,8 @@ export const useUsersStore = defineStore('usersStore', {
       clearNotifications()
 
       try {
-        await useAuth().refreshToken()
-        const data = await useFetchApi(`/records?page=${n}`)
+        // await useAuth().refreshToken()
+        // const data = await useFetchApi(`/records?page=${n}`)
 
         if (data?.items) {
           this.users = handleClientUsers(data.items)
