@@ -8,6 +8,7 @@ export default defineNuxtConfig({
       payloadExtraction: false
     }
   },
+  
   devtools: { enabled: false },
   css: ['~/assets/styles/main.scss', '~/assets/styles/vars.scss'],
   modules: ['@vee-validate/nuxt', '@pinia/nuxt']
