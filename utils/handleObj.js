@@ -10,31 +10,31 @@ export const handleServerObject = (user) => {
   }
 }
 
-export const handleClientUsers = (users) => {
-  return users.map((user) => {
-    return {
-      id: user.id,
-      name: user.i,
-      surname: user.f,
-      middlename: user.o,
-      phone: user.phone,
-      city: user.city,
-      address: user.address,
-      birthday: user.birthday
-    }
-  })
-}
+export const handleClientUsers = (data) => {
+  if (Array.isArray(data)) {
+    return data.map((user) => {
+      return {
+        id: user.id,
+        name: user.i,
+        surname: user.f,
+        middlename: user.o,
+        phone: user.phone,
+        city: user.city,
+        address: user.address,
+        birthday: user.birthday
+      }
+    })
+  }
 
-export const handleClientUser = (user) => {
   return {
-    id: user.id,
-    name: user.i,
-    surname: user.f,
-    middlename: user.o,
-    phone: user.phone,
-    city: user.city,
-    address: user.address,
-    birthday: user.birthday
+    id: data.id,
+    name: data.i,
+    surname: data.f,
+    middlename: data.o,
+    phone: data.phone,
+    city: data.city,
+    address: data.address,
+    birthday: data.birthday
   }
 }
 

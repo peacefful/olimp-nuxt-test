@@ -5,7 +5,7 @@
         <SilverBookIcon />
         <div>Телефонный справочник</div>
       </div>
-      <UIButton @click="useAuth().logout" color="silver">
+      <UIButton @click="logout" color="silver">
         ВЫХОД 
       </UIButton>
     </div>
@@ -14,6 +14,8 @@
 
 <script setup>
 import SilverBookIcon from '@/assets/icons/SilverBookIcon.vue'
+
+const logout = () => navigateTo('/')
 </script>
 
 <style>

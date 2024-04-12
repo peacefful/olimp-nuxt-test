@@ -30,8 +30,8 @@ export const useUsersStore = defineStore('usersStore', {
       clearNotifications()
 
       try {
-        // await useAuth().refreshToken()
-        // const data = await useFetchApi(`/records?page=${n}`)
+        await useRefreshToken()
+        const data = await useFetchApi(`/records?page=${n}`)
 
         if (data?.items) {
           this.users = handleClientUsers(data.items)
@@ -45,17 +45,17 @@ export const useUsersStore = defineStore('usersStore', {
       clearNotifications()
 
       try {
-        await useAuth().refreshToken()
+        await useRefreshToken()
         const data = await useFetchApi(`/records/${id}`)
 
-        this.user = data ? handleClientUser(data) : null
+        this.user = data ? handleClientUsers(data) : null
       } catch (error) {
         console.log(error)
       }
     },
     async deleteUser(userDeleteData) {
       try {
-        await useAuth().refreshToken()
+        await useRefreshToken()
         const deleteUser = await useFetchApi(`/records/${userDeleteData.id}`, {
           method: 'DELETE'
         })
@@ -72,7 +72,7 @@ export const useUsersStore = defineStore('usersStore', {
       clearNotifications()
 
       try {
-        await useAuth().refreshToken()
+        await useRefreshToken()
         const processedData = handleValidationObject(user.data)
 
         if (isEmptyObj(user.errors) && !isEmptyObj(processedData)) {
@@ -98,7 +98,7 @@ export const useUsersStore = defineStore('usersStore', {
     async editUser(user) {
       clearNotifications()
       try {
-        await useAuth().refreshToken()
+        await useRefreshToken()
 
         const id = user.userId
         const processedData = handleValidationObject(user.data)
