@@ -1,11 +1,10 @@
 export const useAuth = () => {
-  const token = useCookie('token')
-
-  const authorization = async (authObj) => {
+  const authorization = async (authData) => {
     try {
+      const token = useCookie('token')
       const data = await useFetchApi(`/auth/signin`, {
         method: 'POST',
-        body: { ...authObj }
+        body: { ...authData }
       })
 
       if (data?.access_token) {
@@ -19,6 +18,7 @@ export const useAuth = () => {
 
   const refreshToken = async () => {
     try {
+      const token = useCookie('token')
       const refreshToken = await useFetchApi(`/auth/refresh`, {
         method: 'POST',
         body: {
@@ -32,10 +32,7 @@ export const useAuth = () => {
     }
   }
 
-  const logout = () => {
-    token.value = 0
-    navigateTo('/')
-  }
+  const logout = () => navigateTo('/')
 
   return {
     authorization,

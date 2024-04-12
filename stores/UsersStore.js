@@ -31,7 +31,6 @@ export const useUsersStore = defineStore('usersStore', {
 
       try {
         await useAuth().refreshToken()
-
         const data = await useFetchApi(`/records?page=${n}`)
 
         if (data?.items) {
@@ -47,7 +46,6 @@ export const useUsersStore = defineStore('usersStore', {
 
       try {
         await useAuth().refreshToken()
-
         const data = await useFetchApi(`/records/${id}`)
 
         this.user = data ? handleClientUser(data) : null
@@ -58,7 +56,6 @@ export const useUsersStore = defineStore('usersStore', {
     async deleteUser(userDeleteData) {
       try {
         await useAuth().refreshToken()
-
         const deleteUser = await useFetchApi(`/records/${userDeleteData.id}`, {
           method: 'DELETE'
         })

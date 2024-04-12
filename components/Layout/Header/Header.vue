@@ -5,7 +5,9 @@
         <SilverBookIcon />
         <div>Телефонный справочник</div>
       </div>
-      <UIButton @click="useAuth().logout" color="silver"> ВЫХОД </UIButton>
+      <UIButton @click="useAuth().logout" color="silver">
+        ВЫХОД 
+      </UIButton>
     </div>
   </header>
 </template>
@@ -15,5 +17,5 @@ import SilverBookIcon from '@/assets/icons/SilverBookIcon.vue'
 </script>
 
 <style>
-@import url("./style.module.scss");
+@import url('./style.module.scss');
 </style>
