@@ -1,9 +1,6 @@
 <template>
   <main class="auth">
-    <form
-      @submit.prevent="useAuth().authorization(userAuth)"
-      class="auth__container"
-    >
+    <form @submit.prevent="useAuth(userAuth)" class="auth__container">
       <Logo />
       <label>
         <p>E-mail</p>
